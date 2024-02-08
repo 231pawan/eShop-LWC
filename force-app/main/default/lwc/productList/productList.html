@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Product Selector">
+        <!-- Product Table -->
+        <div>  <lightning-datatable
+            key-field="Id"
+            data={products}
+            columns={productColumns}
+            onrowselection={handleRowSelected}>
+        </lightning-datatable></div>
+      
+
+        <!-- Selected Product Table -->
+        <template if:true={selectedProducts.length}>
+            <lightning-card title="Selected Products">
+                <lightning-datatable
+                    key-field="Id"
+                    data={selectedProducts}
+                    columns={selectedProductColumns}
+                    onsave={handleUnitsChanged}>
+                </lightning-datatable>
+            </lightning-card>
+        </template>
+</lightning-card>
+</template>
