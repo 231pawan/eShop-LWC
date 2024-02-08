@@ -35,27 +35,32 @@ const productCartColumns = [
         }
     }
 ];
-const checkOuttColumns = [
-    { label: 'Product Id', fieldName: 'Id' },
+const checkoutColumns = [
     { label: 'Name', fieldName: 'Name' },
     { label: 'Price', fieldName: 'Price__c', type: 'currency' },
     { label: 'Product code', fieldName: 'ProductCode' },
     { label: 'Units', type: 'number', fieldName: 'Units' },
+    { label: 'total', type: 'number', fieldName: 'Units' }
 ];
 export default class addNewOrder extends NavigationMixin(LightningElement) {
     productCartColumns = productCartColumns;
+    checkoutColumns = checkoutColumns;
+
     invoice = true;
 
     //selectedCartRecords = []
     //selectedRows = [];
     //@track productColumns;
     @track boolVisible = false;
+    @track boolCheckout = false;
     @track productData;
     error;
     @track selectedProducts = [];
     @track cartData = [];
+    @track checkOutProducts = [];
     //selectedCartRecords;
-    isItemInCart = false;
+    @track isItemInCart = false;
+    @track invoice = false;
 
     // pgination variables
 
@@ -276,6 +281,27 @@ export default class addNewOrder extends NavigationMixin(LightningElement) {
         // Update cartData to trigger reactivity
         // Update cartData to trigger reactivity
         this.cartData = [...this.cartData];
+    }
+
+    onCheckout() {
+        console.log(this.cartData.length);
+        randomInvoiceNumber = Math.floor(Math.random() * 10000); // Generate a random invoice number
+        createdDate = new Date().toLocaleDateString();
+        this.cartData.forEach(item => {
+            const newItem = {
+                Name: item.Name,
+                Price__c: item.Price__c,
+                ProductCode: item.ProductCode,
+                Units: item.Units,
+                Units: item.Units
+            };
+            this.checkOutProducts.push(newItem);
+        });
+        if (this.invoice) {
+            this.invoice = true;
+        } else {
+            this.invoice = false;
+        }
     }
 
 }

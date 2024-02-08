@@ -69,14 +69,28 @@
 
         </div> 
     </template>
-<template if:false={isItemInCart}>
-        <div style="text-align:center;background-color:rgb(255, 0, 0);color:rgb(255, 255, 255);padding:10px">
-            There is nothing to show in cart
-        </div>
-    </template>
-<lightning-button label='Checkout' variant="brand" class="slds-align_absolute-center"></lightning-button>
+<lightning-button label='Add To Cart' variant="success" class="slds-align_absolute-left" onclick={onCheckout}></lightning-button>
+
 <template if:true={invoice}>
-        <lightning-card icon-name="utility:record_alt" title="Invoice"></lightning-card>
-    
+        <lightning-card icon-name="utility:record_alt" title="Invoice">
+
+
+            <div class="invoice-info">
+                <div>Invoice Number: { randomInvoiceNumber }</div>
+                <div>Created Date: { createdDate }</div>
+            </div>
+        
+            <!-- Lightning datatable -->
+            <lightning-datatable
+                key-field="ProductCode"
+                data={checkOutProducts}
+                columns={checkoutColumns}
+                hide-checkbox-column="true"
+            >
+            </lightning-datatable>
+        
+            <!-- Place Order button -->
+            <lightning-button label="Place Order" onclick={handlePlaceOrder}></lightning-button>
+        </lightning-Card>
     </template>
 </template>
